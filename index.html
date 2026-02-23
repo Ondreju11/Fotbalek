@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fotbalek Turnaj - Registrace</title>
+    <title>Fotbálek Turnaj - Registrace</title>
     <meta
       name="description"
-      content="Registrace tymu nebo jednotlivcu na turnaj ve stolnim fotbalku."
+      content="Registrace týmů nebo jednotlivců na turnaj ve stolním fotbálku."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,10 +21,10 @@
     <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
     <main class="layout">
       <section class="hero reveal">
-        <p class="kicker">Stolni fotbalek</p>
+        <p class="kicker">Stolní fotbálek</p>
         <h1>Registrace na turnaj</h1>
         <p class="subtitle">
-          Vyber typ registrace. Tym ma 2 hrace, jednotlivec jde do parovani v den zapasu.
+          Vyber typ registrace. Tým má 2 hráče, jednotlivec jde do párování v den zápasu.
         </p>
       </section>
 
@@ -34,53 +34,53 @@
             <legend>Typ registrace</legend>
             <label>
               <input type="radio" name="registrationType" value="team" checked />
-              <span>Tym (2 hraci)</span>
+              <span>Tým (2 hráči)</span>
             </label>
             <label>
               <input type="radio" name="registrationType" value="individual" />
-              <span>Jednotlivec (1 hrac)</span>
+              <span>Jednotlivec (1 hráč)</span>
             </label>
           </fieldset>
 
           <div id="team-fields" class="fields-group">
             <div class="field">
-              <span>Nazev tymu</span>
+              <span>Název týmu</span>
               <input
                 id="teamName"
                 name="teamName"
                 type="text"
                 maxlength="80"
-                placeholder="Napriklad: Rakety Brno"
+                placeholder="Například: Rakety Brno"
               />
               <label class="inline-check" for="teamNameLater">
                 <input id="teamNameLater" name="teamNameLater" type="checkbox" />
-                <span>Nazev tymu doplnime pozdeji</span>
+                <span>Název týmu doplníme později</span>
               </label>
             </div>
 
             <div class="grid-2">
               <label class="field">
-                <span>Hrac 1</span>
+                <span>Hráč 1</span>
                 <input
                   id="playerOne"
                   name="playerOne"
                   type="text"
                   maxlength="80"
-                  placeholder="Jmeno prvniho hrace"
+                  placeholder="Jméno prvního hráče"
                 />
               </label>
               <div class="field">
-                <span>Hrac 2</span>
+                <span>Hráč 2</span>
                 <input
                   id="playerTwo"
                   name="playerTwo"
                   type="text"
                   maxlength="80"
-                  placeholder="Jmeno druheho hrace"
+                  placeholder="Jméno druhého hráče"
                 />
                 <label class="inline-check" for="playerTwoLater">
                   <input id="playerTwoLater" name="playerTwoLater" type="checkbox" />
-                  <span>Spoluhrace doplnim na miste</span>
+                  <span>Spoluhráče doplním na místě</span>
                 </label>
               </div>
             </div>
@@ -88,26 +88,26 @@
 
           <div id="individual-fields" class="fields-group hidden" aria-hidden="true">
             <label class="field">
-              <span>Jmeno hrace</span>
+              <span>Jméno hráče</span>
               <input
                 id="individualName"
                 name="individualName"
                 type="text"
                 maxlength="80"
-                placeholder="Napriklad: Jan Novak"
+                placeholder="Například: Jan Novák"
               />
             </label>
           </div>
 
           <label class="field">
-            <span>Kontaktni email</span>
+            <span>Kontaktní e-mail</span>
             <input
               id="contactEmail"
               name="contactEmail"
               type="email"
               maxlength="160"
               autocomplete="email"
-              placeholder="napriklad: jan.novak@email.cz"
+              placeholder="například: jan.novak@email.cz"
               required
             />
           </label>
@@ -120,7 +120,7 @@
 
     <footer class="site-footer reveal">
       <p>
-        Kontakt na poradatele: <strong>Ondrej Ulrich</strong> |
+        Kontakt na pořadatele: <strong>Ondřej Ulrich</strong> |
         <a href="https://www.facebook.com/ondra.d.ulrich/" target="_blank" rel="noreferrer noopener">
           Facebook
         </a>

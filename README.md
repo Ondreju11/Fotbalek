@@ -1,47 +1,47 @@
-# Fotbalek turnaj - registrace
+# Fotbálek turnaj - registrace
 
-Jednoducha staticka stranka pro registraci na turnaj ve stolnim fotbalku:
-- `Tym` = nazev tymu + 2 hraci (lze zaskrtnout doplneni nazvu tymu/hrace 2 pozdeji)
-- `Jednotlivec` = 1 hrac (parovani v den zapasu)
-- vzdy se uklada kontaktni email
+Jednoduchá statická stránka pro registraci na turnaj ve stolním fotbálku:
+- `Tým` = název týmu + 2 hráči (lze zaškrtnout doplnění názvu týmu/hráče 2 později)
+- `Jednotlivec` = 1 hráč (párování v den zápasu)
+- vždy se ukládá kontaktní e-mail
 
-Data se ukladaji do Supabase databaze. Aplikace je navrzena pro hostovani na GitHub Pages.
+Data se ukládají do Supabase databáze. Aplikace je navržená pro hostování na GitHub Pages.
 
 ## 1. Supabase setup
 
-1. Vytvor projekt na https://supabase.com
-2. Otevri `SQL Editor` a spust obsah souboru `supabase.sql`
-3. Otevri `Project Settings -> API` a zkopiruj:
+1. Vytvoř projekt na https://supabase.com
+2. Otevři `SQL Editor` a spusť obsah souboru `supabase.sql`
+3. Otevři `Project Settings -> API` a zkopíruj:
    - `Project URL`
    - `anon public key`
 4. V souboru `config.js` nastav:
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
 
-## 2. Spusteni lokalne
+## 2. Spuštění lokálně
 
-Stranka funguje jako staticky web. Muze stacit otevrit `index.html`, ale spolehlivejsi je lokalni server:
+Stránka funguje jako statický web. Může stačit otevřít `index.html`, ale spolehlivější je lokální server:
 
 ```powershell
 python -m http.server 8000
 ```
 
-Pak otevri `http://localhost:8000`.
+Pak otevři `http://localhost:8000`.
 
-## 3. Nasazeni na GitHub Pages
+## 3. Nasazení na GitHub Pages
 
-1. Nahraj soubory do GitHub repozitare.
-2. V repozitari otevri `Settings -> Pages`.
+1. Nahraj soubory do GitHub repozitáře.
+2. V repozitáři otevři `Settings -> Pages`.
 3. `Source` nastav na `Deploy from a branch`.
 4. Vyber branch (obvykle `main`) a root `/`.
-5. Uloz.
+5. Ulož.
 
-Po publikaci bude formular ukladat data do tabulky `public.registrations`.
-Pokud uz tabulku mas z drivejska, spust aktualni `supabase.sql` znovu jako migraci.
+Po publikaci bude formulář ukládat data do tabulky `public.registrations`.
+Pokud už tabulku máš z dřívějška, spusť aktuální `supabase.sql` znovu jako migraci.
 
 ## 4. Kde uvidis registrace
 
-Registrace najdes v Supabase dashboardu:
+Registrace najdeš v Supabase dashboardu:
 - `Table Editor -> public -> registrations`
 
-Ve vychozim nastaveni z tohoto projektu mohou navstevnici pouze vkladat nove registrace, ale ne cist vsechna data.
+Ve výchozím nastavení z tohoto projektu mohou návštěvníci pouze vkládat nové registrace, ale ne číst všechna data.

@@ -24,7 +24,7 @@
 
     if (!window.supabase || !config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) {
       setMessage(
-        "Aplikace neni nakonfigurovana. Dopln SUPABASE_URL a SUPABASE_ANON_KEY do config.js.",
+        "Aplikace není nakonfigurovaná. Doplň SUPABASE_URL a SUPABASE_ANON_KEY do config.js.",
         "error"
       );
       submitBtn.disabled = true;
@@ -136,7 +136,7 @@
     const contactEmail = normalizeEmail(contactEmailInput.value);
 
     if (!contactEmail || !isValidEmail(contactEmail)) {
-      throw new Error("Vypln platny kontaktni email.");
+      throw new Error("Vyplň platný kontaktní e-mail.");
     }
 
     if (type === "team") {
@@ -148,13 +148,13 @@
       const playerTwo = playerTwoLater ? null : normalizeText(playerTwoInput.value);
 
       if (!playerOne) {
-        throw new Error("Vypln jmeno hrace 1.");
+        throw new Error("Vyplň jméno hráče 1.");
       }
       if (!teamNameLater && !teamName) {
-        throw new Error("Vypln nazev tymu nebo zaskrtni, ze ho doplnite pozdeji.");
+        throw new Error("Vyplň název týmu nebo zaškrtni, že ho doplníte později.");
       }
       if (!playerTwoLater && !playerTwo) {
-        throw new Error("Vypln hrace 2 nebo zaskrtni, ze ho doplnis na miste.");
+        throw new Error("Vyplň hráče 2 nebo zaškrtni, že ho doplníš na místě.");
       }
 
       return {
@@ -170,7 +170,7 @@
 
     const individualName = normalizeText(individualNameInput.value);
     if (!individualName) {
-      throw new Error("Vypln jmeno hrace.");
+      throw new Error("Vyplň jméno hráče.");
     }
 
     return {
@@ -192,12 +192,12 @@
     try {
       payload = buildPayload();
     } catch (err) {
-      setMessage(err.message || "Formular obsahuje chybu.", "error");
+      setMessage(err.message || "Formulář obsahuje chybu.", "error");
       return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "Odesilam...";
+    submitBtn.textContent = "Odesílám...";
 
     try {
       const { error } = await supabaseClient.from(tableName).insert(payload);
@@ -211,10 +211,10 @@
         defaultType.checked = true;
       }
       setFieldState("team");
-      setMessage("Registrace byla ulozena. Dekujeme.", "success");
+      setMessage("Registrace byla uložena. Děkujeme.", "success");
     } catch (err) {
       setMessage(
-        "Registraci se nepodarilo ulozit. Zkus to znovu nebo kontaktuj poradatele.",
+        "Registraci se nepodařilo uložit. Zkus to znovu nebo kontaktuj pořadatele.",
         "error"
       );
       console.error(err);
