@@ -22,6 +22,7 @@
   let tableName = "registrations";
 
   const DRAFT_KEY = "fotbalek_registration_draft_v1";
+  const PENDING_SUBMISSION_KEY = "fotbalek_pending_submission_v1";
   const ADMIN_KEY_STORAGE = "fotbalek_admin_export_key_v1";
 
   init();
@@ -45,6 +46,7 @@
     restoreDraft();
     restoreAdminExportKey();
     setFieldState(getSelectedType(), false);
+    showStatusFromQuery();
   }
 
   function bindEvents() {
@@ -173,31 +175,6 @@
     }
   }
 
-  function getFriendlyInsertError(err) {
-    const rawMessage = String(err?.message || "");
-    const rawDetails = String(err?.details || "");
-    const rawHint = String(err?.hint || "");
-    const joined = `${rawMessage} ${rawDetails} ${rawHint}`.toLowerCase();
-
-    if (
-      joined.includes("team_name_pending") ||
-      joined.includes("player_two_pending") ||
-      joined.includes("contact_email") ||
-      joined.includes("registration_shape")
-    ) {
-      return (
-        "Databáze není po posledních změnách aktualizovaná. " +
-        "V Supabase spusť aktuální soubor supabase.sql a zkus odeslání znovu."
-      );
-    }
-
-    if (joined.includes("row-level security") || joined.includes("policy")) {
-      return "V Supabase chybí insert policy pro anon. Spusť aktuální supabase.sql.";
-    }
-
-    return "Registraci se nepodařilo uložit. Zkus to znovu nebo kontaktuj pořadatele.";
-  }
-
   function setExportMessage(text, kind) {
     if (!exportMessageEl) {
       return;
@@ -303,30 +280,48 @@
     setDraftNote("");
   }
 
-  function buildConfirmationSummary(payload) {
-    const isTeam = payload.registration_type === "team";
-    const teamName = payload.team_name_pending ? "Doplníme později" : payload.team_name || "-";
-    const playerTwo = payload.player_two_pending ? "Doplním na místě" : payload.player_two_name || "-";
+  function storePendingSubmission(payload) {
+    try {
+      window.sessionStorage.setItem(PENDING_SUBMISSION_KEY, JSON.stringify(payload));
+      return true;
+    } catch (err) {
+      console.error("Uložení dat pro potvrzení selhalo.", err);
+      return false;
+    }
+  }
 
-    if (isTeam) {
-      return [
-        "Zkontroluj údaje před odesláním:",
-        "",
-        "Typ registrace: Tým (2 hráči)",
-        `Název týmu: ${teamName}`,
-        `Hráč 1: ${payload.player_one_name || "-"}`,
-        `Hráč 2: ${playerTwo}`,
-        `Kontaktní e-mail: ${payload.contact_email}`
-      ].join("\n");
+  function clearPendingSubmission() {
+    try {
+      window.sessionStorage.removeItem(PENDING_SUBMISSION_KEY);
+    } catch (err) {
+      console.error("Mazání čekající registrace selhalo.", err);
+    }
+  }
+
+  function showStatusFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+    if (!status) {
+      return;
     }
 
-    return [
-      "Zkontroluj údaje před odesláním:",
-      "",
-      "Typ registrace: Jednotlivec (1 hráč)",
-      `Jméno hráče: ${payload.player_one_name || "-"}`,
-      `Kontaktní e-mail: ${payload.contact_email}`
-    ].join("\n");
+    if (status === "submitted") {
+      clearPendingSubmission();
+      clearDraft();
+      form.reset();
+      const defaultType = form.querySelector('input[name="registrationType"][value="team"]');
+      if (defaultType) {
+        defaultType.checked = true;
+      }
+      setFieldState("team", false);
+      setMessage("Registrace byla uložena. Děkujeme.", "success");
+    } else if (status === "cancelled") {
+      setMessage("Uprav údaje a odešli registraci znovu.");
+    } else if (status === "error") {
+      setMessage("Registraci se nepodařilo uložit. Zkontroluj údaje a zkus to znovu.", "error");
+    }
+
+    window.history.replaceState({}, document.title, "./");
   }
 
   function restoreAdminExportKey() {
@@ -512,43 +507,33 @@
     };
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     setMessage("");
 
-    let payload;
-    try {
-      payload = buildPayload();
-    } catch (err) {
-      setMessage(err.message || "Formulář obsahuje chybu.", "error");
+    const payload = (() => {
+      try {
+        return buildPayload();
+      } catch (err) {
+        setMessage(err.message || "Formulář obsahuje chybu.", "error");
+        return null;
+      }
+    })();
+
+    if (!payload) {
       return;
     }
 
-    if (!window.confirm(buildConfirmationSummary(payload))) {
-      setMessage("Odeslání zrušeno. Údaje můžeš upravit.");
+    if (!storePendingSubmission(payload)) {
+      setMessage("Nepodařilo se připravit potvrzení. Zkus to prosím znovu.", "error");
       return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "Odesílám...";
+    submitBtn.textContent = "Přesměrovávám...";
 
     try {
-      const { error } = await supabaseClient.from(tableName).insert(payload);
-      if (error) {
-        throw error;
-      }
-
-      form.reset();
-      const defaultType = form.querySelector('input[name="registrationType"][value="team"]');
-      if (defaultType) {
-        defaultType.checked = true;
-      }
-      clearDraft();
-      setFieldState("team", false);
-      setMessage("Registrace byla uložena. Děkujeme.", "success");
-    } catch (err) {
-      setMessage(getFriendlyInsertError(err), "error");
-      console.error(err);
+      window.location.href = "./potvrzeni.html";
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Odeslat registraci";

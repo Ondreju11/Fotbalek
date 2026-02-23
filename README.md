@@ -5,7 +5,7 @@ Jednoduchá statická stránka pro registraci na turnaj ve stolním fotbálku:
 - `Jednotlivec` = 1 hráč (párování v den zápasu)
 - vždy se ukládá kontaktní e-mail
 - rozpracovaný formulář se ukládá průběžně do prohlížeče
-- před odesláním se zobrazí souhrn ke kontrole
+- před odesláním proběhne kontrola údajů na samostatné minimalistické stránce
 - admin může stáhnout CSV export přes zabezpečený exportní klíč
 
 Data se ukládají do Supabase databáze. Aplikace je navržená pro hostování na GitHub Pages.

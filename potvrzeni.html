@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Potvrzení registrace</title>
+    <meta name="description" content="Potvrzení údajů před odesláním registrace na turnaj." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260223-2" />
+    <link rel="stylesheet" href="./potvrzeni.css?v=20260223-2" />
+  </head>
+  <body class="confirm-page">
+    <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+    <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+    <main class="confirm-layout">
+      <section class="confirm-card">
+        <p class="kicker">Poslední kontrola</p>
+        <h1>Potvrzení registrace</h1>
+        <p class="confirm-subtitle">Zkontroluj údaje. Pokud sedí, potvrď odeslání.</p>
+
+        <dl id="confirm-summary" class="confirm-summary"></dl>
+        <p id="confirm-message" class="message" role="status" aria-live="polite"></p>
+
+        <div class="confirm-actions">
+          <a class="btn-secondary" href="./?status=cancelled">Upravit údaje</a>
+          <button id="confirmSubmitBtn" class="btn-primary" type="button">Potvrdit a odeslat</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./config.js?v=20260223-2"></script>
+    <script src="./potvrzeni.js?v=20260223-2"></script>
+  </body>
+</html>
