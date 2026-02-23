@@ -441,6 +441,11 @@
       const errText = String(err?.message || "");
       if (errText.includes("Neplatný exportní klíč")) {
         setExportMessage("Neplatný exportní klíč.", "error");
+      } else if (errText.includes("function crypt") || errText.includes("extensions.crypt")) {
+        setExportMessage(
+          "Exportní SQL funkce je ve staré verzi. Spusť znovu aktuální supabase.sql.",
+          "error"
+        );
       } else {
         setExportMessage(
           "Export se nepodařil. Zkontroluj SQL migraci a nastavení exportního klíče.",

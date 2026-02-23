@@ -55,7 +55,7 @@ Ve výchozím nastavení z tohoto projektu mohou návštěvníci pouze vkládat 
 
 ```sql
 insert into public.admin_export_keys (id, key_hash, updated_at)
-values (1, crypt('SEM_DEJ_SILNY_EXPORTNI_KLIC', gen_salt('bf')), now())
+values (1, extensions.crypt('SEM_DEJ_SILNY_EXPORTNI_KLIC', extensions.gen_salt('bf')), now())
 on conflict (id) do update
 set key_hash = excluded.key_hash,
     updated_at = now();

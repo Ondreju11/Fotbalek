@@ -97,7 +97,7 @@ begin
   from public.admin_export_keys
   where id = 1;
 
-  if v_hash is null or p_key is null or crypt(p_key, v_hash) <> v_hash then
+  if v_hash is null or p_key is null or extensions.crypt(p_key, v_hash) <> v_hash then
     raise exception 'Neplatný exportní klíč.';
   end if;
 
