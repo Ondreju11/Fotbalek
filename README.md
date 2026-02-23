@@ -4,6 +4,9 @@ Jednoduchá statická stránka pro registraci na turnaj ve stolním fotbálku:
 - `Tým` = název týmu + 2 hráči (lze zaškrtnout doplnění názvu týmu/hráče 2 později)
 - `Jednotlivec` = 1 hráč (párování v den zápasu)
 - vždy se ukládá kontaktní e-mail
+- rozpracovaný formulář se ukládá průběžně do prohlížeče
+- před odesláním se zobrazí souhrn ke kontrole
+- admin může stáhnout CSV export přes zabezpečený exportní klíč
 
 Data se ukládají do Supabase databáze. Aplikace je navržená pro hostování na GitHub Pages.
 
@@ -23,7 +26,7 @@ Data se ukládají do Supabase databáze. Aplikace je navržená pro hostování
 Stránka funguje jako statický web. Může stačit otevřít `index.html`, ale spolehlivější je lokální server:
 
 ```powershell
-python -m http.server 8000
+py -m http.server 8000
 ```
 
 Pak otevři `http://localhost:8000`.
@@ -39,9 +42,24 @@ Pak otevři `http://localhost:8000`.
 Po publikaci bude formulář ukládat data do tabulky `public.registrations`.
 Pokud už tabulku máš z dřívějška, spusť aktuální `supabase.sql` znovu jako migraci.
 
-## 4. Kde uvidis registrace
+## 4. Kde uvidíš registrace
 
 Registrace najdeš v Supabase dashboardu:
 - `Table Editor -> public -> registrations`
 
 Ve výchozím nastavení z tohoto projektu mohou návštěvníci pouze vkládat nové registrace, ale ne číst všechna data.
+
+## 5. Nastavení admin exportu CSV
+
+1. V Supabase `SQL Editor` spusť:
+
+```sql
+insert into public.admin_export_keys (id, key_hash, updated_at)
+values (1, crypt('SEM_DEJ_SILNY_EXPORTNI_KLIC', gen_salt('bf')), now())
+on conflict (id) do update
+set key_hash = excluded.key_hash,
+    updated_at = now();
+```
+
+2. Na webu otevři sekci `Admin: export registrací do CSV`.
+3. Zadej stejný exportní klíč a klikni na `Stáhnout CSV`.

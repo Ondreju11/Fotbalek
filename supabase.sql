@@ -64,3 +64,56 @@ on public.registrations
 for insert
 to anon
 with check (true);
+
+create extension if not exists pgcrypto;
+
+create table if not exists public.admin_export_keys (
+  id smallint primary key default 1 check (id = 1),
+  key_hash text not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.admin_export_keys enable row level security;
+
+create or replace function public.export_registrations(p_key text)
+returns table (
+  created_at timestamptz,
+  registration_type text,
+  contact_email text,
+  team_name text,
+  team_name_pending boolean,
+  player_one_name text,
+  player_two_name text,
+  player_two_pending boolean
+)
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_hash text;
+begin
+  select key_hash into v_hash
+  from public.admin_export_keys
+  where id = 1;
+
+  if v_hash is null or p_key is null or crypt(p_key, v_hash) <> v_hash then
+    raise exception 'Neplatný exportní klíč.';
+  end if;
+
+  return query
+  select
+    r.created_at,
+    r.registration_type,
+    r.contact_email,
+    r.team_name,
+    r.team_name_pending,
+    r.player_one_name,
+    r.player_two_name,
+    r.player_two_pending
+  from public.registrations r
+  order by r.created_at asc;
+end;
+$$;
+
+grant execute on function public.export_registrations(text) to anon;

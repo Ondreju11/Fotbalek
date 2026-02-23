@@ -124,7 +124,26 @@
 
           <button id="submitBtn" type="submit">Odeslat registraci</button>
           <p id="form-message" class="message" role="status" aria-live="polite"></p>
+          <p id="draft-note" class="draft-note" role="status" aria-live="polite"></p>
         </form>
+
+        <details class="admin-export">
+          <summary>Admin: export registrací do CSV</summary>
+          <div class="admin-export__content">
+            <label class="field" for="adminExportKey">
+              <span>Exportní klíč</span>
+              <input
+                id="adminExportKey"
+                name="adminExportKey"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Zadej exportní klíč"
+              />
+            </label>
+            <button id="exportBtn" class="btn-secondary" type="button">Stáhnout CSV</button>
+            <p id="export-message" class="message" role="status" aria-live="polite"></p>
+          </div>
+        </details>
       </section>
     </main>
 

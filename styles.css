@@ -153,7 +153,8 @@ h1 {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
   width: 100%;
   border: 1px solid var(--line);
   background: #fff;
@@ -171,14 +172,16 @@ input[type="checkbox"] {
 }
 
 input[type="text"]:focus-visible,
-input[type="email"]:focus-visible {
+input[type="email"]:focus-visible,
+input[type="password"]:focus-visible {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
 }
 
 input[type="text"]:disabled,
-input[type="email"]:disabled {
+input[type="email"]:disabled,
+input[type="password"]:disabled {
   background: #f4f2ec;
   color: #747474;
   cursor: not-allowed;
@@ -210,6 +213,7 @@ input[type="email"]:disabled {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.8rem;
+  align-items: start;
 }
 
 button[type="submit"] {
@@ -255,6 +259,13 @@ button[type="submit"][disabled] {
   color: var(--ok);
 }
 
+.draft-note {
+  min-height: 1.1em;
+  margin: -0.3rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
 .hidden {
   display: none;
 }
@@ -284,6 +295,55 @@ button[type="submit"][disabled] {
 .site-footer a {
   color: var(--accent-strong);
   font-weight: 600;
+}
+
+.admin-export {
+  margin-top: 1.1rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 0.85rem;
+}
+
+.admin-export summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ink);
+  user-select: none;
+}
+
+.admin-export__content {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.btn-secondary {
+  width: fit-content;
+  min-width: 190px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.62rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 7px 14px rgba(27, 27, 27, 0.09);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary[disabled] {
+  opacity: 0.65;
+  cursor: wait;
 }
 
 @keyframes reveal {
