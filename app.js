@@ -173,6 +173,31 @@
     }
   }
 
+  function getFriendlyInsertError(err) {
+    const rawMessage = String(err?.message || "");
+    const rawDetails = String(err?.details || "");
+    const rawHint = String(err?.hint || "");
+    const joined = `${rawMessage} ${rawDetails} ${rawHint}`.toLowerCase();
+
+    if (
+      joined.includes("team_name_pending") ||
+      joined.includes("player_two_pending") ||
+      joined.includes("contact_email") ||
+      joined.includes("registration_shape")
+    ) {
+      return (
+        "Databáze není po posledních změnách aktualizovaná. " +
+        "V Supabase spusť aktuální soubor supabase.sql a zkus odeslání znovu."
+      );
+    }
+
+    if (joined.includes("row-level security") || joined.includes("policy")) {
+      return "V Supabase chybí insert policy pro anon. Spusť aktuální supabase.sql.";
+    }
+
+    return "Registraci se nepodařilo uložit. Zkus to znovu nebo kontaktuj pořadatele.";
+  }
+
   function setExportMessage(text, kind) {
     if (!exportMessageEl) {
       return;
@@ -522,10 +547,7 @@
       setFieldState("team", false);
       setMessage("Registrace byla uložena. Děkujeme.", "success");
     } catch (err) {
-      setMessage(
-        "Registraci se nepodařilo uložit. Zkus to znovu nebo kontaktuj pořadatele.",
-        "error"
-      );
+      setMessage(getFriendlyInsertError(err), "error");
       console.error(err);
     } finally {
       submitBtn.disabled = false;
