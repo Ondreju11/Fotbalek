@@ -143,6 +143,11 @@ h1 {
   gap: 0.33rem;
 }
 
+.field-stack {
+  display: grid;
+  align-content: start;
+}
+
 .field span {
   font-weight: 600;
 }
@@ -194,6 +199,10 @@ input[type="email"]:disabled {
 }
 
 .field input + .inline-check {
+  margin-top: 0.55rem;
+}
+
+.inline-check-below {
   margin-top: 0.55rem;
 }
 

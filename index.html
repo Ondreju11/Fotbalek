@@ -50,6 +50,8 @@
                 name="teamName"
                 type="text"
                 maxlength="80"
+                autocomplete="organization"
+                autocapitalize="words"
                 placeholder="Například: Rakety Brno"
               />
               <label class="inline-check" for="teamNameLater">
@@ -66,19 +68,25 @@
                   name="playerOne"
                   type="text"
                   maxlength="80"
+                  autocomplete="name"
+                  autocapitalize="words"
                   placeholder="Jméno prvního hráče"
                 />
               </label>
-              <div class="field">
-                <span>Hráč 2</span>
-                <input
-                  id="playerTwo"
-                  name="playerTwo"
-                  type="text"
-                  maxlength="80"
-                  placeholder="Jméno druhého hráče"
-                />
-                <label class="inline-check" for="playerTwoLater">
+              <div class="field-stack">
+                <label class="field">
+                  <span>Hráč 2</span>
+                  <input
+                    id="playerTwo"
+                    name="playerTwo"
+                    type="text"
+                    maxlength="80"
+                    autocomplete="name"
+                    autocapitalize="words"
+                    placeholder="Jméno druhého hráče"
+                  />
+                </label>
+                <label class="inline-check inline-check-below" for="playerTwoLater">
                   <input id="playerTwoLater" name="playerTwoLater" type="checkbox" />
                   <span>Spoluhráče doplním na místě</span>
                 </label>
@@ -94,6 +102,8 @@
                 name="individualName"
                 type="text"
                 maxlength="80"
+                autocomplete="name"
+                autocapitalize="words"
                 placeholder="Například: Jan Novák"
               />
             </label>
