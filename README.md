@@ -1,8 +1,9 @@
 # Fotbalek turnaj - registrace
 
 Jednoducha staticka stranka pro registraci na turnaj ve stolnim fotbalku:
-- `Tym` = nazev tymu + 2 hraci
+- `Tym` = nazev tymu + 2 hraci (lze zaskrtnout doplneni nazvu tymu/hrace 2 pozdeji)
 - `Jednotlivec` = 1 hrac (parovani v den zapasu)
+- vzdy se uklada kontaktni email
 
 Data se ukladaji do Supabase databaze. Aplikace je navrzena pro hostovani na GitHub Pages.
 
@@ -36,6 +37,7 @@ Pak otevri `http://localhost:8000`.
 5. Uloz.
 
 Po publikaci bude formular ukladat data do tabulky `public.registrations`.
+Pokud uz tabulku mas z drivejska, spust aktualni `supabase.sql` znovu jako migraci.
 
 ## 4. Kde uvidis registrace
 

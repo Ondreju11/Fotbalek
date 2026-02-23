@@ -60,7 +60,7 @@ body {
 .layout {
   width: min(940px, 92vw);
   margin: 0 auto;
-  padding: 5.5rem 0 4rem;
+  padding: 5.5rem 0 1.7rem;
 }
 
 .hero {
@@ -140,7 +140,8 @@ h1 {
   font-weight: 600;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"] {
   width: 100%;
   border: 1px solid var(--line);
   background: #fff;
@@ -152,10 +153,24 @@ input[type="text"] {
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
-input[type="text"]:focus-visible {
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.18);
+}
+
+.inline-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.inline-check input[type="checkbox"] {
+  margin: 0;
 }
 
 .grid-2 {
@@ -219,6 +234,23 @@ button[type="submit"][disabled] {
 
 .card.reveal {
   animation-delay: 0.12s;
+}
+
+.site-footer {
+  width: min(940px, 92vw);
+  margin: 0 auto;
+  padding-bottom: 2.6rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: var(--accent-strong);
+  font-weight: 600;
 }
 
 @keyframes reveal {

@@ -43,7 +43,7 @@
           </fieldset>
 
           <div id="team-fields" class="fields-group">
-            <label class="field">
+            <div class="field">
               <span>Nazev tymu</span>
               <input
                 id="teamName"
@@ -52,7 +52,11 @@
                 maxlength="80"
                 placeholder="Napriklad: Rakety Brno"
               />
-            </label>
+              <label class="inline-check" for="teamNameLater">
+                <input id="teamNameLater" name="teamNameLater" type="checkbox" />
+                <span>Nazev tymu doplnime pozdeji</span>
+              </label>
+            </div>
 
             <div class="grid-2">
               <label class="field">
@@ -65,7 +69,7 @@
                   placeholder="Jmeno prvniho hrace"
                 />
               </label>
-              <label class="field">
+              <div class="field">
                 <span>Hrac 2</span>
                 <input
                   id="playerTwo"
@@ -74,7 +78,11 @@
                   maxlength="80"
                   placeholder="Jmeno druheho hrace"
                 />
-              </label>
+                <label class="inline-check" for="playerTwoLater">
+                  <input id="playerTwoLater" name="playerTwoLater" type="checkbox" />
+                  <span>Spoluhrace doplnim na miste</span>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -91,11 +99,33 @@
             </label>
           </div>
 
+          <label class="field">
+            <span>Kontaktni email</span>
+            <input
+              id="contactEmail"
+              name="contactEmail"
+              type="email"
+              maxlength="160"
+              autocomplete="email"
+              placeholder="napriklad: jan.novak@email.cz"
+              required
+            />
+          </label>
+
           <button id="submitBtn" type="submit">Odeslat registraci</button>
           <p id="form-message" class="message" role="status" aria-live="polite"></p>
         </form>
       </section>
     </main>
+
+    <footer class="site-footer reveal">
+      <p>
+        Kontakt na poradatele: <strong>Ondrej Ulrich</strong> |
+        <a href="https://www.facebook.com/ondra.d.ulrich/" target="_blank" rel="noreferrer noopener">
+          Facebook
+        </a>
+      </p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="./config.js"></script>

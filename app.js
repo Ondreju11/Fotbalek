@@ -7,9 +7,12 @@
   const typeInputs = form.querySelectorAll('input[name="registrationType"]');
 
   const teamNameInput = document.getElementById("teamName");
+  const teamNameLaterInput = document.getElementById("teamNameLater");
   const playerOneInput = document.getElementById("playerOne");
   const playerTwoInput = document.getElementById("playerTwo");
+  const playerTwoLaterInput = document.getElementById("playerTwoLater");
   const individualNameInput = document.getElementById("individualName");
+  const contactEmailInput = document.getElementById("contactEmail");
 
   let supabaseClient = null;
   let tableName = "registrations";
@@ -40,6 +43,8 @@
       input.addEventListener("change", () => setFieldState(getSelectedType()));
     }
 
+    teamNameLaterInput.addEventListener("change", applyTeamOptionalState);
+    playerTwoLaterInput.addEventListener("change", applyTeamOptionalState);
     form.addEventListener("submit", handleSubmit);
   }
 
@@ -56,16 +61,50 @@
     individualFields.classList.toggle("hidden", isTeam);
     individualFields.setAttribute("aria-hidden", String(isTeam));
 
-    teamNameInput.required = isTeam;
     playerOneInput.required = isTeam;
-    playerTwoInput.required = isTeam;
     individualNameInput.required = !isTeam;
+    contactEmailInput.required = true;
 
     if (isTeam) {
       individualNameInput.value = "";
+      applyTeamOptionalState();
     } else {
       teamNameInput.value = "";
       playerOneInput.value = "";
+      playerTwoInput.value = "";
+      teamNameLaterInput.checked = false;
+      playerTwoLaterInput.checked = false;
+      teamNameInput.disabled = false;
+      playerTwoInput.disabled = false;
+      teamNameInput.required = false;
+      playerTwoInput.required = false;
+    }
+
+    setMessage("");
+  }
+
+  function applyTeamOptionalState() {
+    const isTeam = getSelectedType() === "team";
+    if (!isTeam) {
+      teamNameInput.disabled = false;
+      playerTwoInput.disabled = false;
+      teamNameInput.required = false;
+      playerTwoInput.required = false;
+      return;
+    }
+
+    const teamNameLater = teamNameLaterInput.checked;
+    const playerTwoLater = playerTwoLaterInput.checked;
+
+    teamNameInput.disabled = teamNameLater;
+    playerTwoInput.disabled = playerTwoLater;
+    teamNameInput.required = !teamNameLater;
+    playerTwoInput.required = !playerTwoLater;
+
+    if (teamNameLater) {
+      teamNameInput.value = "";
+    }
+    if (playerTwoLater) {
       playerTwoInput.value = "";
     }
 
@@ -74,6 +113,14 @@
 
   function normalizeText(value) {
     return (value || "").trim().replace(/\s+/g, " ");
+  }
+
+  function normalizeEmail(value) {
+    return (value || "").trim().toLowerCase();
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
   }
 
   function setMessage(text, kind) {
@@ -86,21 +133,38 @@
 
   function buildPayload() {
     const type = getSelectedType();
+    const contactEmail = normalizeEmail(contactEmailInput.value);
+
+    if (!contactEmail || !isValidEmail(contactEmail)) {
+      throw new Error("Vypln platny kontaktni email.");
+    }
 
     if (type === "team") {
-      const teamName = normalizeText(teamNameInput.value);
-      const playerOne = normalizeText(playerOneInput.value);
-      const playerTwo = normalizeText(playerTwoInput.value);
+      const teamNameLater = teamNameLaterInput.checked;
+      const playerTwoLater = playerTwoLaterInput.checked;
 
-      if (!teamName || !playerOne || !playerTwo) {
-        throw new Error("Vypln nazev tymu a oba hrace.");
+      const teamName = teamNameLater ? null : normalizeText(teamNameInput.value);
+      const playerOne = normalizeText(playerOneInput.value);
+      const playerTwo = playerTwoLater ? null : normalizeText(playerTwoInput.value);
+
+      if (!playerOne) {
+        throw new Error("Vypln jmeno hrace 1.");
+      }
+      if (!teamNameLater && !teamName) {
+        throw new Error("Vypln nazev tymu nebo zaskrtni, ze ho doplnite pozdeji.");
+      }
+      if (!playerTwoLater && !playerTwo) {
+        throw new Error("Vypln hrace 2 nebo zaskrtni, ze ho doplnis na miste.");
       }
 
       return {
         registration_type: "team",
+        contact_email: contactEmail,
         team_name: teamName,
+        team_name_pending: teamNameLater,
         player_one_name: playerOne,
-        player_two_name: playerTwo
+        player_two_name: playerTwo,
+        player_two_pending: playerTwoLater
       };
     }
 
@@ -111,9 +175,12 @@
 
     return {
       registration_type: "individual",
+      contact_email: contactEmail,
       team_name: null,
+      team_name_pending: false,
       player_one_name: individualName,
-      player_two_name: null
+      player_two_name: null,
+      player_two_pending: false
     };
   }
 
