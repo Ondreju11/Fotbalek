@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260223-3" />
+    <link rel="stylesheet" href="./styles.css?v=20260223-5" />
   </head>
   <body>
     <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
@@ -34,11 +34,16 @@
             <legend>Typ registrace</legend>
             <label>
               <input type="radio" name="registrationType" value="team" checked />
-              <span>Tým (2 hráči)</span>
+              <span class="type-option">
+                <span class="type-main">Tým (<strong class="type-count">2 hráči</strong>)</span>
+              </span>
             </label>
             <label>
               <input type="radio" name="registrationType" value="individual" />
-              <span>Jednotlivec (1 hráč)</span>
+              <span class="type-option">
+                <span class="type-main">Jednotlivec (<strong class="type-count">1 hráč</strong>)</span>
+                <small class="type-note">Bude napárován v den turnaje.</small>
+              </span>
             </label>
           </fieldset>
 
@@ -127,23 +132,28 @@
           <p id="draft-note" class="draft-note" role="status" aria-live="polite"></p>
         </form>
 
-        <details class="admin-export">
-          <summary>Admin: export registrací do CSV</summary>
-          <div class="admin-export__content">
-            <label class="field" for="adminExportKey">
-              <span>Exportní klíč</span>
-              <input
-                id="adminExportKey"
-                name="adminExportKey"
-                type="password"
-                autocomplete="current-password"
-                placeholder="Zadej exportní klíč"
-              />
-            </label>
-            <button id="exportBtn" class="btn-secondary" type="button">Stáhnout CSV</button>
-            <p id="export-message" class="message" role="status" aria-live="polite"></p>
-          </div>
-        </details>
+      </section>
+
+      <section class="event-note card reveal">
+        <h2>Informace k turnaji</h2>
+        <p>Milí studenti,</p>
+        <p>
+          s Psynou jsme se pro Vás připravili úplně novou akci, která tady ještě nebyla! 😄
+        </p>
+        <p>Turnaj ve stolním fotbálku. ⚽️🏟️</p>
+        <p>Takže si připravte ruce a herního ducha a pojďme si zahrát.</p>
+        <p>
+          Přihlašování je na odkazu níže. Máte možnost se přihlásit v předem dané dvojici, nebo jako
+          jednotlivci a budete napárováni těsně před začátkem turnaje. 🤝
+        </p>
+        <p>
+          Důležité: pokud máte strach, že Vám to moc nejde nebo se bojíte, máme pro Vás dobrou zprávu.
+          Převzali jsme speciální herní formát, který zajišťuje, že každý si zahraje dostatek her a
+          hlavně zaručí, že hry budou velmi vyrovnané. Tudíž i když nejste mistři, zahrajete si s lidmi,
+          kteří to mají podobně. A zároveň kompetitivní duch turnaje zůstane zachován. 🏅
+        </p>
+        <p><strong>Přihlašování zde:</strong></p>
+        <p><strong>Startovné 50 Kč / osoba</strong></p>
       </section>
     </main>
 
@@ -154,6 +164,23 @@
           Facebook
         </a>
       </p>
+      <details class="admin-export admin-export-footer">
+        <summary>Admin: export registrací do CSV</summary>
+        <div class="admin-export__content">
+          <label class="field" for="adminExportKey">
+            <span>Exportní klíč</span>
+            <input
+              id="adminExportKey"
+              name="adminExportKey"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Zadej exportní klíč"
+            />
+          </label>
+          <button id="exportBtn" class="btn-secondary" type="button">Stáhnout CSV</button>
+          <p id="export-message" class="message" role="status" aria-live="polite"></p>
+        </div>
+      </details>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

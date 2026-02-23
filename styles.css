@@ -123,14 +123,67 @@ h1 {
   gap: 0.45rem;
   margin-right: 1.1rem;
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  padding: 0.2rem 0.35rem;
-  border-radius: 0.55rem;
-  transition: background-color 0.16s ease;
+  font-weight: 600;
+  padding: 0.52rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+  transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
 }
 
 .type-switch label:hover {
   background: rgba(15, 118, 110, 0.08);
+  border-color: var(--accent);
+}
+
+.type-switch input[type="radio"] {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  margin: 0;
+}
+
+.type-option {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.08rem;
+}
+
+.type-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.type-note {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.2;
+}
+
+.type-count {
+  display: inline-block;
+  padding: 0.14rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 800;
+  background: rgba(15, 118, 110, 0.13);
+  color: var(--accent-strong);
+}
+
+.type-switch label input:checked + .type-option .type-count {
+  background: var(--accent);
+  color: white;
+}
+
+.type-switch label input:checked + .type-option .type-main {
+  color: var(--accent-strong);
+}
+
+.type-switch label:has(input:checked) {
+  border-color: var(--accent);
+  background: rgba(15, 118, 110, 0.12);
+  box-shadow: 0 4px 12px rgba(10, 94, 87, 0.18);
 }
 
 .fields-group {
@@ -344,6 +397,63 @@ button[type="submit"][disabled] {
 .btn-secondary[disabled] {
   opacity: 0.65;
   cursor: wait;
+}
+
+.admin-export-footer {
+  margin-top: 0.5rem;
+  font-size: 0.84rem;
+  max-width: 520px;
+}
+
+.admin-export-footer summary {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.admin-export-footer .admin-export__content {
+  margin-top: 0.55rem;
+  gap: 0.55rem;
+}
+
+.admin-export-footer .field span {
+  font-size: 0.79rem;
+  font-weight: 600;
+}
+
+.admin-export-footer input[type="password"] {
+  font-size: 0.9rem;
+  padding: 0.62rem 0.78rem;
+}
+
+.admin-export-footer .btn-secondary {
+  min-width: 150px;
+  padding: 0.52rem 0.9rem;
+  font-size: 0.82rem;
+}
+
+.admin-export-footer .message {
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-height: 1.1em;
+}
+
+.event-note {
+  margin-top: 1rem;
+  border-left: 6px solid var(--accent);
+}
+
+.event-note h2 {
+  margin: 0;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(1.8rem, 4.6vw, 2.4rem);
+  letter-spacing: 0.02em;
+}
+
+.event-note p {
+  margin: 0.35rem 0;
+  color: var(--ink-soft);
+  line-height: 1.55;
 }
 
 @keyframes reveal {
