@@ -162,6 +162,16 @@ h1 {
   line-height: 1.2;
 }
 
+.type-rule {
+  margin-top: 0.15rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px dashed rgba(239, 91, 42, 0.5);
+  background: rgba(239, 91, 42, 0.12);
+  color: #8f2f14;
+  font-weight: 700;
+}
+
 .type-count {
   display: inline-block;
   padding: 0.14rem 0.55rem;
